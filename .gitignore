@@ -1,0 +1,3 @@
+src/build*
+src/command_find/command_find.pro
+src/command_find/*.pro.user
