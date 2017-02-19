@@ -200,6 +200,7 @@ DIST          = /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/qt_config.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/spec_post.prf \
+		../command_find/.qmake.stash \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/toolchain.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/default_pre.prf \
@@ -375,6 +376,7 @@ Makefile: ../command_find/command_find.pro /home/leo/bin/Qt/5.8/gcc_64/mkspecs/l
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/qt_config.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/toolchain.prf \
 		/home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/default_pre.prf \
@@ -540,6 +542,7 @@ Makefile: ../command_find/command_find.pro /home/leo/bin/Qt/5.8/gcc_64/mkspecs/l
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/qt_config.prf:
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf:
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/exclusive_builds.prf:
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/toolchain.prf:
 /home/leo/bin/Qt/5.8/gcc_64/mkspecs/features/default_pre.prf:
