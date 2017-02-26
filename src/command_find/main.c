@@ -77,15 +77,12 @@ void do_file(const char * file_name, const char * const * parms){
     struct stat file_stats;
     if(!strcmp(file_name,""))
     {
-        printf("\n1%s\n",file_name);
         return;
     }
-
     stat(file_name, &file_stats);
 
     if(!strcmp(parms[2],PARMS1))
     {
-        printf("\n3\n");
 
         paramCase=1;
     }
@@ -95,9 +92,6 @@ void do_file(const char * file_name, const char * const * parms){
         printf("%s", file_name);
         break;
     default:
-        printf("\n4\n");
 
     }
-
-
 }
