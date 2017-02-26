@@ -3,15 +3,15 @@ Beispiele für Terminal-Befehle unter Linux
 # Git Info
 ## Git wichtige Befehle: 
 
-## git clone 
+git clone 
 
-## git pull --rebase
+git pull --rebase
 
-## git add
+git add
 
-## git commit -m "..."
+git commit -m "..."
 
-## git push
+git push
 
 ..... git status ..... auch ganz wichtig!
 ......git stash...... um Veränderungen zu stashen. es geht aber nichts
