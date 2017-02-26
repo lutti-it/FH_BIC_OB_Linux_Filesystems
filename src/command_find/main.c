@@ -28,9 +28,7 @@ void do_dir(const char * dir_name, const char * const * parms)
     }
     if ( currentDir == NULL )
     {
-        printf("\n!\n");
         do_file(dir_name,parms);
-        printf("\n!!\n");
         return;
     }
 
@@ -89,9 +87,8 @@ void do_file(const char * file_name, const char * const * parms){
     switch(paramCase)
     {
     case 1:
-        printf("%s", file_name);
+        printf("\n%s\n", file_name);
         break;
-    default:
 
     }
 }
