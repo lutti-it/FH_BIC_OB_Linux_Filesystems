@@ -24,8 +24,7 @@ static void do_file(const char * file_name, const char * const * parms);
 static void do_dir(const char * dir_name, const char * const * parms);
 static int is_dot_or_dot_dot(char const* name);
 static int my_print (const char* file_name, const char* const* parms);
-static int do_user();
-
+static int do_user (const char* const* userIdentification,struct stat *file_stats,const char* file_name,const char* const* parms);
 //argc = Anzahl der Parameter
 //argv = die einzelnen übergebenen Werte werden in einem char-array gespeichert (argument values) 
 //Beispiel Programmaufruf ./foo kurt hannes --> argc 3 (1. ./foo, 2. kurt, 3. hannes)
@@ -33,8 +32,9 @@ static int do_user();
 
 int main(int argc, char* argv[])
 {
-    if(argc>=2) //wenn argument count größer gleich 2, z.b. myfind -name 
-	{
+
+    if(argc>=2) //wenn argument count größer gleich 2, z.b. myfind -name
+    {
         do_file(argv[1],argv); //do_file statt do_dir //"myfind" = argv[0], "-name" = argv[1] --> const char * file_name, argv --> const char * const * parms
     }
     return 0;
@@ -43,10 +43,9 @@ int main(int argc, char* argv[])
 void do_dir(const char * dir_name, const char * const * parms)
 {
     char* subdir;
-    int paramCase=0;
     DIR* currentDir = opendir(dir_name); //DIR *opendir(const char *dirname);
     struct dirent *curr_ent; //readdir --> struct dirent *entry
-	
+
     if ( currentDir == NULL )
     {
         return;
@@ -58,11 +57,11 @@ void do_dir(const char * dir_name, const char * const * parms)
             subdir = malloc(strlen(dir_name) + strlen(curr_ent->d_name) + 2);
             strcpy(subdir, dir_name);
             char str[] = "/";
-			if(strncmp(dir_name, str, 1) != 0)
-			{
-				strcat(subdir, "/"); // slash abfrage! dir name kann schon ein "/" beinhalten
+            if(strncmp(dir_name, str, 1) != 0)
+            {
+                strcat(subdir, "/"); // slash abfrage! dir name kann schon ein "/" beinhalten
             }
-			strcat(subdir, curr_ent->d_name);
+            strcat(subdir, curr_ent->d_name);
             do_file(subdir,parms); //do_file
             free(subdir);
         }
@@ -75,14 +74,19 @@ int is_dot_or_dot_dot(char const* name)
 }
 void do_file(const char * file_name, const char * const * parms) //in der main ist der erste parameter hier unser argv[1], der zweite argv (das gesamte array) 
 {
-
     int paramCase=0;
 	int j=2;
 	int i=0;
 	
     struct stat file_stats; //system struct that is defined to store information about files
 	//st_mode, st_ino (inode), st_dev, st_uid, st_gid, st_atime, st_ctime, st_mtime, st_nlink, st_size
-	
+    int paramCase=0;
+    int j=2;
+    int i=0;
+
+    struct stat file_stats; //system struct that is defined to store information about files
+    //st_mode, st_ino (inode), st_dev, st_uid, st_gid, st_atime, st_ctime, st_mtime, st_nlink, st_size
+
     if(!strcmp(file_name,"")) //int strcmp(char *str1, char *str2)
     {
         return;
@@ -95,69 +99,99 @@ void do_file(const char * file_name, const char * const * parms) //in der main i
     if(i<j)
     {
         printf(" %s ", file_name);
-        return;
     }
-    stat(file_name, &file_stats); //stat lstat? //int stat(const char *path, struct stat *buf); 
-
-    while(parms[j]!=NULL)
+    else
     {
-        if(!strcmp(parms[i],PARMS1))
+        stat(file_name, &file_stats); //stat lstat? //int stat(const char *path, struct stat *buf);
+
+        while(parms[j]!=NULL)
         {
 			paramCase=1;
+            if(!strcmp(parms[j],PARMS1))
+            {
+                paramCase=1;
+            }
+            if(!strcmp(parms[j],PARMS2))
+            {
+                paramCase=2;
+            }
+            if (!strcmp(parms[j], PARMS3))
+            {
+                paramCase = 3;
+            }
+            if (!strcmp(parms[j], PARMS4))
+            {
+                paramCase = 4;
+            }
+            if (!strcmp(parms[j], PARMS5))
+            {
+                paramCase = 5;
+            }
+            if (!strcmp(parms[j], PARMS6))
+            {
+                paramCase = 6;
+            }
+            if (!strcmp(parms[j], PARMS7))
+            {
+                paramCase = 7;
+            }
+            //-print 1, -user 2, -name 3, -type 4, -ls 5, -nouser 6, -path 7
+            switch(paramCase)
+            {
+            case 1:
+                my_print(file_name,parms);
+                break;
+            case 2:
+                do_user(parms[j+1],&file_stats,file_name,parms);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            }
+            j++;
         }
-        if(!strcmp(parms[i],PARMS2))
-        {
-            paramCase=2;
-        }
-		if (!strcmp(parms[i], PARMS3))
-		{
-			paramCase = 3;
-		}
-		if (!strcmp(parms[i], PARMS4))
-		{
-			paramCase = 4;
-		}
-		if (!strcmp(parms[i], PARMS5))
-		{
-			paramCase = 5;
-		}
-		if (!strcmp(parms[i], PARMS6))
-		{
-			paramCase = 6;
-		}
-		if (!strcmp(parms[i], PARMS7))
-		{
-			paramCase = 7;
-		}
-	//-print 1, -user 2, -name 3, -type 4, -ls 5, -nouser 6, -path 7
-        switch(paramCase)
-        {
-        case 1:
-            printf(" %s ", myprint(file_name, ??????));
-            break;
-        case 2:
-            printf(" %d ", file_stats.st_uid);
-            break;
-		case 3:
-			printf(" %s ", file_name);
-			break;
-		case 4:
-			printf("");
-			break;
-		case 5:
-			printf("");
-			break;
-		case 6:
-			printf("");
-			break;
-		case 7:
-			printf("");
-			break;
-
-        }
-        j++;
     }
     do_dir(file_name,parms);
+}
+//printf Fehlerbehandlung einbauen! --> ?? fprintf( stderr, "that didn't go well\n" );
+static int my_print (const char* file_name, const char* const* parms)
+{
+    if (fprintf(stdout, "%s\n", file_name) < 0)
+    {
+        fprintf(stderr, "%s:  %s:  %s:  \n", parms[2], file_name, strerror(errno));
+    }
+    return 0; //0 means success
+}
+static int do_user (const char* const* userIdentification,struct stat *file_stats,const char* file_name,const char* const* parms)
+{
+    struct passwd *pwd;
+    pwd=getpwnam(userIdentification);
+    if(pwd)
+    {
+        if(pwd->pw_uid==file_stats->st_uid)
+        {
+            my_print(file_name,parms);
+        }
+    }
+    else
+    {
+        pwd=getpwuid(userIdentification);
+        if(pwd)
+        {
+            if(pwd->pw_uid==file_stats->st_uid)
+            {
+                my_print(file_name,parms);
+            }
+        }
+
+    }
 }
 //printf Fehlerbehandlung einbauen! --> ?? fprintf( stderr, "that didn't go well\n" );
 static int my_print (const char* file_name, const char* const* parms)
@@ -169,17 +203,3 @@ static int my_print (const char* file_name, const char* const* parms)
 	return 0; //0 means success
 }
 
-static int do_user (const char* const* parms, const int *offset)
-{
-	struct passwd *pwd = NULL;
-	unsigned long uid = 0;
-	char *null_terminator = NULL;
-	//offset --> j (index param, 2) 
-	if (*offset >= argc) //???? 
-	{
-		fprintf(stderr, "%s: Falsche Parameter\n", parms[0]);
-		return 1; //1 = failure EXIT_FAILURE
-	}
-	
-	
-}
